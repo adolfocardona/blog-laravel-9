@@ -65,20 +65,35 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
-docker-compose build
+## Construir Imagen PHP 8.2
 
-docker-compose up -d
+> docker-compose build
 
-docker exec -it blog_app bash
+## Componer Containers
+
+> docker-compose up -d
+
+## Entrar al contenedor php y ejecuta
+
+-   docker exec -it blog_app bash
+-   composer install
+-   php artisan --version
+-   php artisan key:generate
+-   php artisan migrate
 
 <!-- curl -sS https://getcomposer.org/installer | php
 mv composer.phar /usr/local/bin/composer
 composer create-project --prefer-dist laravel/laravel="9.\*" . -->
 
-docker exec -it blog_app composer install
-docker exec -it blog_app php artisan --version
+## O desde tu host ejecuta
 
-.env
+-   docker exec -it blog_app composer install
+-   docker exec -it blog_app php artisan --version
+-   docker exec -it blog_app php artisan key:generate
+-   docker exec -it blog_app php artisan migrate
+
+## Ejemplo .env
+
 DB_CONNECTION=mysql
 DB_HOST=db
 DB_PORT=3306
@@ -87,27 +102,26 @@ DB_USERNAME=laravel
 DB_PASSWORD=password
 docker exec -it blog_app php artisan migrate
 
-1. Ajustar los Permisos del Directorio /storage
-   El directorio storage y sus subdirectorios necesitan permisos de escritura para el usuario bajo el cual se ejecuta PHP.
+## Ajustar los Permisos del Directorio /storage El directorio storage y sus subdirectorios necesitan permisos de escritura para el usuario bajo el cual se ejecuta PHP.
 
-Dentro del contenedor, ejecuta:
+### Dentro de tu host, ejecuta:
 
 docker exec -it laravel_app bash
 
-# Ajustar permisos para que el usuario del servidor web pueda escribir
+## Ajustar permisos para que el usuario del servidor web pueda escribir
 
 chmod -R 775 storage bootstrap/cache
 
-# Cambiar el propietario del directorio al usuario y grupo correcto (generalmente www-data)
+## Cambiar el propietario del directorio al usuario y grupo correcto (generalmente www-data)
 
-chown -R www-data:www-data storage bootstrap/cache
+> chown -R www-data:www-data storage bootstrap/cache
 
-2. Confirmar el Usuario que Ejecuta PHP
-   Asegúrate de que el servidor PHP está ejecutándose como el usuario www-data o el usuario esperado.
+## Confirmar el Usuario que Ejecuta PHP, Asegúrate de que el servidor PHP está ejecutándose como el usuario www-data o el usuario esperado.
 
-Dentro del contenedor, ejecuta:
-ps aux | grep php
+## Dentro del contenedor, ejecuta:
 
-Instala procps (dependiendo del sistema base de tu imagen):
-Para sistemas basados en Debian o Ubuntu:
-apt-get update && apt-get install -y procps
+> ps aux | grep php
+
+## Instala procps (dependiendo del sistema base de tu imagen): Para sistemas basados en Debian o Ubuntu:
+
+> apt-get update && apt-get install -y procps
