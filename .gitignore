@@ -19,3 +19,6 @@ yarn-error.log
 /mysql
 /mysql_bd
 php.ini
+/storage
+/bootstrap
+
